@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketRobot", "TicketRobot\TicketRobot.csproj", "{0B2FD83A-CD88-4CD2-BFCF-5FBA63E72A2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketRobot.ViewModel", "TicketRobot.ViewModel\TicketRobot.ViewModel.csproj", "{89DAA680-8F02-403A-BD1C-7E3B5038155A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketRobot.Service", "TicketRobot.Service\TicketRobot.Service.csproj", "{4F7FD301-4864-4D23-95A8-E1305EE6C0D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketRobot.Core", "TicketRobot.Core\TicketRobot.Core.csproj", "{D73EDA8A-785B-4440-A027-C2FBD915B092}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +19,18 @@ Global
 		{0B2FD83A-CD88-4CD2-BFCF-5FBA63E72A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B2FD83A-CD88-4CD2-BFCF-5FBA63E72A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B2FD83A-CD88-4CD2-BFCF-5FBA63E72A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DAA680-8F02-403A-BD1C-7E3B5038155A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DAA680-8F02-403A-BD1C-7E3B5038155A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DAA680-8F02-403A-BD1C-7E3B5038155A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DAA680-8F02-403A-BD1C-7E3B5038155A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F7FD301-4864-4D23-95A8-E1305EE6C0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F7FD301-4864-4D23-95A8-E1305EE6C0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F7FD301-4864-4D23-95A8-E1305EE6C0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F7FD301-4864-4D23-95A8-E1305EE6C0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73EDA8A-785B-4440-A027-C2FBD915B092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73EDA8A-785B-4440-A027-C2FBD915B092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73EDA8A-785B-4440-A027-C2FBD915B092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73EDA8A-785B-4440-A027-C2FBD915B092}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
