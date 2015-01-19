@@ -66,5 +66,25 @@ namespace TicketRobot.Core
         {
             logger.Info(content);
         }
+        public static void writeFile(string fileName, string content)
+        {
+            string filePath = "E:/Logs/"+DateTime.Now.ToString("yyyyMMdd")+"/";
+
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+
+            filePath =  filePath+fileName+ ".json";
+           
+            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+
+                    sw.Write(content);
+                }
+            }
+        }
     }
 }

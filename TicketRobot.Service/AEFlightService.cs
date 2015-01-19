@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketRobot.ViewModel;
+using TicketRobot.Core;
 
 namespace TicketRobot.Service
 {
     public class AEFlightService
     {
+        private string CARRIOR = "AE";
         public string setPostBody(AERequestViewModel request)
         {
             string result = string.Empty;
@@ -31,7 +33,7 @@ namespace TicketRobot.Service
         {
             List<AEFlightViewModel> result = new List<AEFlightViewModel>();
             var collection = doc.DocumentNode.SelectNodes("//*[@id=\"content\"]/table/tr/td[2]/div/table[4]/tr");
-
+            int segmentCount = 0;
             foreach (HtmlNode node in collection)
             {
                 if ((node.Attributes.Contains("class") && node.Attributes["class"].Value == "blue") ||
@@ -40,18 +42,50 @@ namespace TicketRobot.Service
                     continue;
                 }
 
-                if (node.SelectNodes("td[@class='ct']") != null && node.SelectNodes("td[@class='ct']").Count == 9)
+                if (node.SelectNodes("td[@class='ct']") != null && node.SelectNodes("td[@class='ct']").Count == 6)
                 {
-                    var tdcollection = node.SelectNodes("td[@class='ct']");
-                    AEFlightViewModel aeViewModel = new AEFlightViewModel();
-                    //確認這班飛機有沒有飛
-                    var chkFlight = node.SelectSingleNode("th[@class='scheFlightAvl'][div/img]");
-                    if(chkFlight == null)
+                    try
                     {
-                        continue;
+                        segmentCount++;
+                        var tdcollection = node.SelectNodes("td[@class='ct']");
+                        var tdDetail = node.SelectSingleNode(string.Format("following-sibling::tr/td/div[@id='depFlightInfo{0}']/table/tr/td[@class='ct']/table/tr/td[@class='ct']/table", segmentCount));
+                        var depNode = tdDetail.SelectSingleNode("tr[2]/td[@class='ct']/table/tr/td[2]/table/tr[2]");
+                        var arrNode = tdDetail.SelectSingleNode("tr[2]/td[@class='ct']/table/tr/td[2]/table/tr[5]");
+                        var tdInfo = tdDetail.SelectNodes("tr[3]/td[@class='ct']/table/tr");
+
+                        AEFlightViewModel aeViewModel = new AEFlightViewModel();
+                        //確認這班飛機有沒有飛
+                        var chkFlight = node.SelectSingleNode("th[@class='scheFlightAvl'][div/img]");
+                        if (chkFlight == null)
+                        {
+                            continue;
+                        }
+                        aeViewModel.flightNum = tdcollection[0].SelectSingleNode("div").InnerText;
+
+                        aeViewModel.fdate = depNode.SelectSingleNode("td[@class='ct'][2]").InnerText
+                            + depNode.SelectNodes("td[@class='ct']").First().InnerText;
+
+                        aeViewModel.tdate = arrNode.SelectSingleNode("td[@class='ct'][2]").InnerText
+                            + arrNode.SelectNodes("td[@class='ct']").First().InnerText;
+
+                        aeViewModel.fAirport = depNode.SelectNodes("td[@class='ct']").Last().InnerText;
+                        aeViewModel.tAirport = arrNode.SelectNodes("td[@class='ct']").Last().InnerText;
+                        aeViewModel.tAirport = CARRIOR;
+                        aeViewModel.infomation = tdInfo[0].SelectSingleNode("td[@class='ct'][2]/a").InnerText;
+                        aeViewModel.flyTime = tdInfo[1].SelectSingleNode("td[@class='ct'][2]").InnerText;
+                        aeViewModel.equipment = tdInfo[2].SelectSingleNode("td[@class='ct'][2]/a").InnerText;
+
+
+                        aeViewModel.@class = tdInfo[3].SelectSingleNode("td[@class='ct'][2]/img").Attributes["src"].Value.Replace("imgs/", string.Empty).Replace(".gif", string.Empty);
+
+                        aeViewModel.stopNum = int.Parse(tdInfo[4].SelectSingleNode("td[@class='ct'][2]/img").Attributes["src"].Value.Replace("imgs/bStop_", string.Empty).Replace(".gif", string.Empty));
+                        result.Add(aeViewModel);
                     }
-                    aeViewModel.flightNum = tdcollection[0].SelectSingleNode("div").InnerText;
-                    
+                    catch (Exception ex)
+                    {
+                        Utility.writeLog(ex.ToString());
+                    }
+
                 }
             }
 
