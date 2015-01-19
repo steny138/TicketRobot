@@ -62,6 +62,11 @@ namespace TicketRobot.Core
             return doc;
         }
 
+        public static void writeErrorLog(string content)
+        {
+            logger.Error(content);
+        }
+
         public static void writeLog(string content)
         {
             logger.Info(content);

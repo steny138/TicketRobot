@@ -34,15 +34,16 @@ namespace TicketRobot.Service
             List<AEFlightViewModel> result = new List<AEFlightViewModel>();
             var collection = doc.DocumentNode.SelectNodes("//*[@id=\"content\"]/table/tr/td[2]/div/table[4]/tr");
             int segmentCount = 0;
-            foreach (HtmlNode node in collection)
+            for(int i =0 ; i< collection.Count; i++)
             {
+                HtmlNode node = collection[i];
                 if ((node.Attributes.Contains("class") && node.Attributes["class"].Value == "blue") ||
                     (node.SelectSingleNode("td").Attributes.Contains("colspan") && node.SelectSingleNode("td").Attributes["colspan"].Value == "16"))
                 {
                     continue;
                 }
 
-                if (node.SelectNodes("td[@class='ct']") != null && node.SelectNodes("td[@class='ct']").Count == 6)
+                if (node.SelectNodes("td[@class='ct']") != null && node.SelectNodes("td[@class='ct']").Count >5)
                 {
                     try
                     {
@@ -80,6 +81,7 @@ namespace TicketRobot.Service
 
                         aeViewModel.stopNum = int.Parse(tdInfo[4].SelectSingleNode("td[@class='ct'][2]/img").Attributes["src"].Value.Replace("imgs/bStop_", string.Empty).Replace(".gif", string.Empty));
                         result.Add(aeViewModel);
+                        
                     }
                     catch (Exception ex)
                     {
