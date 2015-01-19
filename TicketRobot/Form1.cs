@@ -66,22 +66,22 @@ namespace TicketRobot
                 case "/uniairec/b2c/cfresav03.aspx":
                     //旅客資料
                     insertText("txt_famName_1", "劉"); //姓
-                    insertText("txt_gvnName_1", "宥辰"); //名
+                    insertText("txt_gvnName_1", "曉明"); //名
                     insertText("ddm_year_1", "1989"); //生日 - 年
                     insertText("ddm_month_1", "05"); //生日 - 月
                     insertText("ddm_day_1", "04"); //生日 - 日
-                    insertText("txt_idNum_1", "N124885927"); //身分證
+                    insertText("txt_idNum_1", "A123456789"); //身分證
                     insertText("txt_pptNum_1", ""); //外籍旅客護照號碼
-                    setSelectOption("ddm_title_1", "01");
+                    setSelectOption("ddm_title_1", "01"); //稱謂
 
                     //---------聯絡人資料
                     setSelectOption("samewith", "1"); //同第幾位旅客資料
                     insertText("areacode", "02"); //區碼
                     insertText("phonenum", "87939000"); //市內電話
-                    insertText("ext", "8338"); //分機
-                    insertText("cellnum", "0911757685"); //手機號碼
+                    insertText("ext", "0000"); //分機
+                    insertText("cellnum", "0911123456"); //手機號碼
                     setSelectOption("cellnum_na", "886/"); //國碼
-                    insertText("email", "steny138@gmail.com"); //電子郵件
+                    insertText("email", "XXX@liontravel.com"); //電子郵件
                     
 
                     //buttonClick("Button1");
