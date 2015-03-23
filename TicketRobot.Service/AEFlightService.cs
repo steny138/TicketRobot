@@ -34,6 +34,7 @@ namespace TicketRobot.Service
             List<AEFlightViewModel> result = new List<AEFlightViewModel>();
             var collection = doc.DocumentNode.SelectNodes("//*[@id=\"content\"]/table/tr/td[2]/div/table[4]/tr");
             int segmentCount = 0;
+            if (collection == null) throw new Exception("查無資料");
             for(int i =0 ; i< collection.Count; i++)
             {
                 HtmlNode node = collection[i];
@@ -64,16 +65,16 @@ namespace TicketRobot.Service
                         aeViewModel.flightNum = tdcollection[0].SelectSingleNode("div").InnerText;
 
                         aeViewModel.fdate = depNode.SelectSingleNode("td[@class='ct'][2]").InnerText
-                            + depNode.SelectNodes("td[@class='ct']").First().InnerText;
+                            + " " + depNode.SelectNodes("td[@class='ct']").First().InnerText;
 
                         aeViewModel.tdate = arrNode.SelectSingleNode("td[@class='ct'][2]").InnerText
-                            + arrNode.SelectNodes("td[@class='ct']").First().InnerText;
+                            + " " + arrNode.SelectNodes("td[@class='ct']").First().InnerText;
 
                         aeViewModel.fAirport = depNode.SelectNodes("td[@class='ct']").Last().InnerText;
                         aeViewModel.tAirport = arrNode.SelectNodes("td[@class='ct']").Last().InnerText;
-                        aeViewModel.tAirport = CARRIOR;
+                        aeViewModel.carr = CARRIOR;
                         aeViewModel.infomation = tdInfo[0].SelectSingleNode("td[@class='ct'][2]/a").InnerText;
-                        aeViewModel.flyTime = tdInfo[1].SelectSingleNode("td[@class='ct'][2]").InnerText;
+                        aeViewModel.flyTime = (tdInfo[1].SelectSingleNode("td[@class='ct'][2]").InnerText ?? string.Empty).Replace("&nbsp;", string.Empty);
                         aeViewModel.equipment = tdInfo[2].SelectSingleNode("td[@class='ct'][2]/a").InnerText;
 
 

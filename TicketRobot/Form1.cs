@@ -30,15 +30,16 @@ namespace TicketRobot
         {
             WebBrowser browser = (WebBrowser)sender;
             string url = browser.Url.LocalPath;
+            Thread.Sleep(1000);
             switch(url)
             {
                 case "/uniairec/b2c/cfresav01.aspx":
                     //首頁
                     insertText("UniCalendar1_txtYear", "2015"); //去程日期 - 年
-                    insertText("UniCalendar1_txtMonth", "01"); //去程日期 - 月
+                    insertText("UniCalendar1_txtMonth", "03"); //去程日期 - 月
                     insertText("UniCalendar1_txtDay", "30"); //去程日期 - 日
                     insertText("UniCalendar2_txtYear", "2015"); //回程日期 - 年
-                    insertText("UniCalendar2_txtMonth", "01"); //回程日期 - 月
+                    insertText("UniCalendar2_txtMonth", "03"); //回程日期 - 月
                     insertText("UniCalendar2_txtDay", "30"); //回程日期 - 日
                     insertText("Radio4", "1"); //回程日期 - 日
                     
@@ -159,6 +160,9 @@ namespace TicketRobot
             SpiderButton.Text = "Executing...";
             OrderButton.Enabled = false;
             SpiderButton.Enabled = false;
+            webBrowser.Visible = false;
+            timeTableGridView.Visible = true;
+            timeTableGridView.DataSource = null;
             ThreadPool.QueueUserWorkItem(new WaitCallback(startJob), "0");
         }
         private void OrderButton_Click(object sender, EventArgs e)
@@ -167,6 +171,7 @@ namespace TicketRobot
             OrderButton.Enabled = false;
             SpiderButton.Enabled = false;
             webBrowser.Visible = true;
+            timeTableGridView.Visible = false;
             //自動操作
             webBrowser.Navigate("https://www.uniair.com.tw/uniairec/b2c/cfresav01.aspx");
             //ThreadPool.QueueUserWorkItem(new WaitCallback(startOrder), "0");
@@ -223,13 +228,15 @@ namespace TicketRobot
                             req.in_stops = "A";
                             req.in_dptarv = "D";
                             req.currentCalForm = "dep";
-                            req.currentdate = "115-1-17";
+                            req.currentdate = "115-3-23";
                             HtmlAgilityPack.HtmlDocument doc = Utility.downLoadHtmlDoc(AppSettings.AEUrl, aeService.setPostBody(req), Encoding.GetEncoding("Big5"));
                             req.currentdate = doc.DocumentNode.OuterHtml;
                             var result = aeService.parse(doc);
                             if (result.Count > 0)
                             {
                                 Utility.writeFile(sDate.ToString("yyyyMMdd") + depCity + arrCity, JsonConvert.SerializeObject(result));
+                                this.Invoke(new UpdateDataGridHandler(updateDataGrid), result);
+                                
                             }
                         }
                     }
@@ -247,6 +254,7 @@ namespace TicketRobot
             }
         }
         delegate void UpdateLableHandler(string text);
+        delegate void UpdateDataGridHandler(List<AEFlightViewModel> dataList);
         private void finishExecuteSpider(string text)
         {
             OrderButton.Enabled = true;
@@ -260,6 +268,19 @@ namespace TicketRobot
             SpiderButton.Enabled = true;
             webBrowser.Visible = false;
             SpiderButton.Text = "Execute - Order";
+        }
+        private void updateDataGrid(List<AEFlightViewModel> dataList)
+        {
+            //輸出資料到gridview
+            if (timeTableGridView.DataSource != null)
+            {
+                dataList.AddRange((List<AEFlightViewModel>)timeTableGridView.DataSource);
+                timeTableGridView.DataSource = dataList;
+            }
+            else
+            {
+                timeTableGridView.DataSource = dataList;
+            }
         }
         #endregion
     }
