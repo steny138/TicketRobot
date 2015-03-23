@@ -30,6 +30,7 @@ namespace TicketRobot
         {
             WebBrowser browser = (WebBrowser)sender;
             string url = browser.Url.LocalPath;
+            if (Stop) finishExecuteOrder("");
             Thread.Sleep(1000);
             switch(url)
             {
@@ -83,14 +84,16 @@ namespace TicketRobot
                     insertText("cellnum", "0911123456"); //手機號碼
                     setSelectOption("cellnum_na", "886/"); //國碼
                     insertText("email", "XXX@liontravel.com"); //電子郵件
-                    
 
+                    finishExecuteOrder("Stop");
                     //buttonClick("Button1");
                     break;
 
             }
             url = "te";
         }
+
+        private bool Stop = false;
 
         #region 輸入欄位
         public void insertText(string element, string value)
@@ -161,6 +164,8 @@ namespace TicketRobot
             OrderButton.Enabled = false;
             SpiderButton.Enabled = false;
             webBrowser.Visible = false;
+            StopButton.Visible = true;
+            Stop = false;
             timeTableGridView.Visible = true;
             timeTableGridView.DataSource = null;
             ThreadPool.QueueUserWorkItem(new WaitCallback(startJob), "0");
@@ -172,15 +177,18 @@ namespace TicketRobot
             SpiderButton.Enabled = false;
             webBrowser.Visible = true;
             timeTableGridView.Visible = false;
+            StopButton.Visible = true;
+            Stop = false;
             //自動操作
             webBrowser.Navigate("https://www.uniair.com.tw/uniairec/b2c/cfresav01.aspx");
+            //startOrder("0");
             //ThreadPool.QueueUserWorkItem(new WaitCallback(startOrder), "0");
         }
         private void startOrder(object state)
         {
             try
             {
-                
+                webBrowser.Navigate("https://www.uniair.com.tw/uniairec/b2c/cfresav01.aspx");
             }
             catch (Exception ex)
             {
@@ -215,6 +223,7 @@ namespace TicketRobot
 
                         for (int i = 0; i < (endDate - srtDate).Days + 1; i++)
                         {
+                            if (Stop) break;
                             var sDate = srtDate.AddDays(i);
                             AERequestViewModel req = new AERequestViewModel();
                             req.region = "國內";
@@ -260,14 +269,16 @@ namespace TicketRobot
             OrderButton.Enabled = true;
             SpiderButton.Enabled = true;
             webBrowser.Visible = false;
+            StopButton.Visible = false;
             SpiderButton.Text = "Execute - FlightTable";
         }
         private void finishExecuteOrder(string text)
         {
             OrderButton.Enabled = true;
             SpiderButton.Enabled = true;
-            webBrowser.Visible = false;
-            SpiderButton.Text = "Execute - Order";
+            //webBrowser.Visible = false;
+            StopButton.Visible = false;
+            OrderButton.Text = "Execute - Order";
         }
         private void updateDataGrid(List<AEFlightViewModel> dataList)
         {
@@ -283,5 +294,10 @@ namespace TicketRobot
             }
         }
         #endregion
+
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            Stop = true;
+        }
     }
 }

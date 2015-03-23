@@ -33,6 +33,7 @@
             this.SpiderButton = new System.Windows.Forms.Button();
             this.OrderButton = new System.Windows.Forms.Button();
             this.timeTableGridView = new System.Windows.Forms.DataGridView();
+            this.StopButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.timeTableGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // 
             // SpiderButton
             // 
-            this.SpiderButton.Location = new System.Drawing.Point(501, 56);
+            this.SpiderButton.Location = new System.Drawing.Point(501, 63);
             this.SpiderButton.Name = "SpiderButton";
             this.SpiderButton.Size = new System.Drawing.Size(120, 23);
             this.SpiderButton.TabIndex = 2;
@@ -76,11 +77,23 @@
             this.timeTableGridView.TabIndex = 4;
             this.timeTableGridView.Visible = false;
             // 
+            // StopButton
+            // 
+            this.StopButton.Location = new System.Drawing.Point(657, 63);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.Size = new System.Drawing.Size(75, 23);
+            this.StopButton.TabIndex = 5;
+            this.StopButton.Text = "Stop";
+            this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Visible = false;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 773);
+            this.Controls.Add(this.StopButton);
             this.Controls.Add(this.timeTableGridView);
             this.Controls.Add(this.OrderButton);
             this.Controls.Add(this.SpiderButton);
@@ -100,6 +113,7 @@
         private System.Windows.Forms.Button SpiderButton;
         private System.Windows.Forms.Button OrderButton;
         private System.Windows.Forms.DataGridView timeTableGridView;
+        private System.Windows.Forms.Button StopButton;
     }
 }
 
