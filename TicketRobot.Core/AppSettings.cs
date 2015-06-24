@@ -8,6 +8,9 @@ namespace TicketRobot.Core
 {
     public class AppSettings
     {
+        /// <summary>
+        /// AE 官網網址
+        /// </summary>
         public static string AEUrl
         {
             get

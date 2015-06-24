@@ -32,16 +32,18 @@ namespace TicketRobot
             string url = browser.Url.LocalPath;
             if (Stop) finishExecuteOrder("");
             Thread.Sleep(1000);
+            DateTime fDate = DateTime.Now.AddDays(30);
+            DateTime tDate = DateTime.Now.AddDays(30);
             switch(url)
             {
                 case "/uniairec/b2c/cfresav01.aspx":
                     //首頁
                     insertText("UniCalendar1_txtYear", "2015"); //去程日期 - 年
-                    insertText("UniCalendar1_txtMonth", "03"); //去程日期 - 月
-                    insertText("UniCalendar1_txtDay", "30"); //去程日期 - 日
+                    insertText("UniCalendar1_txtMonth", fDate.Month.ToString().PadLeft(2,'0')); //去程日期 - 月
+                    insertText("UniCalendar1_txtDay", fDate.Day.ToString().PadLeft(2,'0')); //去程日期 - 日
                     insertText("UniCalendar2_txtYear", "2015"); //回程日期 - 年
-                    insertText("UniCalendar2_txtMonth", "03"); //回程日期 - 月
-                    insertText("UniCalendar2_txtDay", "30"); //回程日期 - 日
+                    insertText("UniCalendar2_txtMonth", tDate.Month.ToString().PadLeft(2,'0')); //回程日期 - 月
+                    insertText("UniCalendar2_txtDay", tDate.Day.ToString().PadLeft(2,'0')); //回程日期 - 日
                     insertText("Radio4", "1"); //回程日期 - 日
                     
                     setSelectOption("item1", "TSA"); //出發地
@@ -83,7 +85,7 @@ namespace TicketRobot
                     insertText("ext", "0000"); //分機
                     insertText("cellnum", "0911123456"); //手機號碼
                     setSelectOption("cellnum_na", "886/"); //國碼
-                    insertText("email", "XXX@liontravel.com"); //電子郵件
+                    insertText("email", "demo@liontravel.com"); //電子郵件
 
                     finishExecuteOrder("Stop");
                     //buttonClick("Button1");

@@ -9,9 +9,22 @@ using TicketRobot.Core;
 
 namespace TicketRobot.Service
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// </code>
+    /// </example>
     public class AEFlightService
     {
         private string CARRIOR = "AE";
+
+        /// <summary>
+        /// 設定準備傳出的參數
+        /// </summary>
+        /// <param name="request">參數物件</param>
+        /// <returns>參數字串</returns>
         public string setPostBody(AERequestViewModel request)
         {
             string result = string.Empty;
@@ -29,6 +42,12 @@ namespace TicketRobot.Service
             result += "&currentdate=" + request.currentdate;
             return result;
         }
+        /// <summary>
+        /// 轉換HTML文件到航班物件列表
+        /// </summary>
+        /// <param name="doc">航班表的HTML</param>
+        /// <returns>航班物件列表</returns>
+        /// <exception cref="System.Exception">轉換資料失敗</exception>
         public List<AEFlightViewModel> parse(HtmlDocument doc)
         {
             List<AEFlightViewModel> result = new List<AEFlightViewModel>();
@@ -63,7 +82,7 @@ namespace TicketRobot.Service
                             continue;
                         }
                         aeViewModel.flightNum = tdcollection[0].SelectSingleNode("div").InnerText;
-
+                        
                         aeViewModel.fdate = depNode.SelectSingleNode("td[@class='ct'][2]").InnerText
                             + " " + depNode.SelectNodes("td[@class='ct']").First().InnerText;
 
@@ -95,6 +114,26 @@ namespace TicketRobot.Service
             return result;
 
 
+        }
+
+
+
+
+
+        /// <summary>
+        /// Operator_tests the specified a.
+        /// </summary>
+        /// <param name="a">A.</param>
+        /// <param name="b">The b.</param>
+        /// <returns></returns>
+        /// <example>
+        /// <code>
+        /// LTC-04406-0011
+        /// </code>
+        /// </example>
+        public string operator_test (string a, int b)
+        {
+            return string.Empty;
         }
     }
 }

@@ -13,9 +13,12 @@ namespace TicketRobot.Core
     public class Utility
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        /// <summary>載入提供的網址的HTML並轉換成HTML Document-Get</summary>
+        /// <summary>
+        /// 載入提供的網址的HTML並轉換成HTML Document-Get
+        /// </summary>
         /// <param name="url">網址</param>
         /// <param name="encoding">編碼類型</param>
+        /// <returns>HTML Document </returns>
         public static HtmlDocument downLoadHtmlDoc(string url, Encoding encoding)
         {
             WebClient client = new WebClient();
@@ -36,9 +39,13 @@ namespace TicketRobot.Core
             return doc;
         }
 
-        /// <summary>載入提供的網址的HTML並轉換成HTML Document-Post</summary>
+        /// <summary>
+        /// 載入提供的網址的HTML並轉換成HTML Document-Post
+        /// </summary>
         /// <param name="url">網址</param>
+        /// <param name="postBody">The post body.</param>
         /// <param name="encoding">編碼類型</param>
+        /// <returns>HTML Document</returns>
         public static HtmlDocument downLoadHtmlDoc(string url, string postBody, Encoding encoding)
         {
             WebClient client = new WebClient();
@@ -62,15 +69,28 @@ namespace TicketRobot.Core
             return doc;
         }
 
+        /// <summary>
+        /// 紀錄錯誤LOG
+        /// </summary>
+        /// <param name="content">錯誤訊息</param>
         public static void writeErrorLog(string content)
         {
             logger.Error(content);
         }
 
+        /// <summary>
+        /// 紀錄LOG
+        /// </summary>
+        /// <param name="content">LOG內容</param>
         public static void writeLog(string content)
         {
             logger.Info(content);
         }
+        /// <summary>
+        /// 寫入LOG檔案
+        /// </summary>
+        /// <param name="fileName">LOG檔案名稱</param>
+        /// <param name="content">LOG內容</param>
         public static void writeFile(string fileName, string content)
         {
             string filePath = "E:/Logs/"+DateTime.Now.ToString("yyyyMMdd")+"/";
